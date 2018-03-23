@@ -1,0 +1,10 @@
+.main {
+  text-align: center;
+  padding: 15%;
+  background-image: url("https://cdn.vox-cdn.com/uploads/chorus_asset/file/7383237/Masthead_LR_1.0.png");
+  color: white;
+  -webkit-box-shadow: 0px 29px 38px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 29px 38px -5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 29px 38px -5px rgba(0, 0, 0, 0.75);
+  margin-bottom: 20px;
+}

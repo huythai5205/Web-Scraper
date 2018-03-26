@@ -5,7 +5,8 @@ const db = require('../models');
 module.exports = function (app) {
 
 
-  app.get("/scrape", function (req, res) {
+  app.get("/api/scrape", function (req, res) {
+    let articles = [];
     axios.get("https://www.theverge.com/").then(function (response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
@@ -15,18 +16,63 @@ module.exports = function (app) {
         result.title = $(this).children('a').text();
         result.link = $(this).children('a').attr('href');
 
-        db.Article.create(result).then(data => {
-          console.log(data);
-        }).catch(err => {
-          return res.json(err);
-        })
+        articles.push(result);
+
       });
-
-
+      res.json(articles);
     });
-
-
   });
 
+  app.post('/api/article', (req, res) => {
+    db.Article.create(req.body.article).then(data => {
+      res.json(data);
+    }).catch(err => {
+      return res.json(err);
+    });
+  });
 
+  app.get("/api/articles", (req, res) => {
+    db.Article.find({}).then((data) => {
+      res.json(data);
+    }).catch(err => {
+      res.json(err);
+    });
+  });
+
+  app.get("/api/articles/:id", (req, res) => {
+    db.Article.findOne({
+      _id: req.params.id
+    }).populate("note").then(data => {
+      res.json(data);
+    }).catch(err => {
+      res.json(err);
+    });
+  });
+
+  app.post("/api/articles/:id", (req, res) => {
+    db.Note.create(req.body).then(dbNote => {
+      return db.Article.findByIdAndUpdate({
+        _id: req.params.id
+      }, {
+        note: dbNote.id
+      }, {
+        new: true
+      });
+    }).then(dbArticle => {
+      res.json(dbArticle);
+    }).catch(err => {
+      res.json(err);
+    });
+  });
+
+  app.delete('/api/article/:id', (req, res) => {
+    console.log(req.params.id);
+    db.Article.remove({
+      _id: req.params.id
+    }).then(data => {
+      console.log(data);
+    }).catch(err => {
+      res.json(err);
+    });
+  });
 }

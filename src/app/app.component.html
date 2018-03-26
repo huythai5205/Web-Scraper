@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-  <a class="navbar-brand" routerLink="home">Mongo Scraper</a>
+  <a class="navbar-brand" routerLink="display-articles">Mongo Scraper</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
     aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" routerLink="home">Home
+      <a class="nav-item nav-link active" routerLink="display-articles">Home
         <span class="sr-only">(current)</span>
       </a>
       <a class="nav-item nav-link" routerLink="saved-articles">saved Articles</a>
-      <a class="nav-item nav-link" routerLink="scrape-new-articles">SCAPE NEW ARTICLES</a>
+      <a class="nav-item nav-link" (click)="scrapeArticles()">SCAPE NEW ARTICLES</a>
     </div>
   </div>
 </nav>
@@ -19,7 +19,6 @@
   <h1>Mongo Scraper</h1>
   <h3>The Verge</h3>
 </div>
-
 
 <!--router views-->
 <router-outlet></router-outlet>

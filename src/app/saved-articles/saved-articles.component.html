@@ -1,3 +1,15 @@
-<p>
-  saved-articles works!
-</p>
+<div class="saved-articles">
+  <div *ngIf="!articles||!articles[0]" class="no-article">
+    <h4>There's no saved article</h4>
+  </div>
+
+  <div *ngIf="articles" class="articles">
+    <div *ngFor="let article of articles" class="card text-white bg-light mb-3">
+      <div class="card-header">
+        <a href="{{article.link}}" target="_blank">{{article.title}}</a>
+        <button (click)="saveNotes(article)">ARTICLE NOTES</button>
+        <button (click)="deleteArticle(article)">DELETE FROM SAVED</button>
+      </div>
+    </div>
+  </div>
+</div>

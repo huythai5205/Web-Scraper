@@ -14,11 +14,12 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(bodyParser.json());
 
 app.use(express.static("dist"));
 
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/webScraper");
+mongoose.connect("mongodb://127.0.0.1/webScraper");
 
 require('./routes/routes.js')(app.use(cors()));
 

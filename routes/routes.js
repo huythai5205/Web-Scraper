@@ -24,7 +24,9 @@ module.exports = function (app) {
   });
 
   app.post('/api/article', (req, res) => {
+    console.log('Her is the article', req.body.article);
     db.Article.create(req.body.article).then(data => {
+      console.log('data in the service', data);
       res.json(data);
     }).catch(err => {
       return res.json(err);

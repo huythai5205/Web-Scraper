@@ -13,6 +13,7 @@ declare let $: any;
 })
 export class AppComponent implements OnInit {
   title = 'Web Scraper';
+  articlesAdded = 0;
 
   constructor(private httpClient: HttpClient, private router: Router, private dataService: DataService) { }
 
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
   scrapeArticles() {
     this.httpClient.get('http://localhost:3000/api/scrape').subscribe(data => {
       this.dataService.setArticles(data);
+      this.articlesAdded = data.length;
       $('.modal').modal('show');
       this.router.navigate(['display-articles']);
     },

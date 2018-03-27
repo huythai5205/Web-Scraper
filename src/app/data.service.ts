@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class DataService {
 
   private articles = new BehaviorSubject<Object>(null);
-  private savedArticles = new BehaviorSubject<Object>(null);
 
   constructor() { }
 
@@ -15,13 +14,5 @@ export class DataService {
 
   getArticles() {
     return this.articles;
-  }
-
-  setSavedArticles(articles) {
-    this.savedArticles.next(articles);
-  }
-
-  getSavedArticles() {
-    return this.savedArticles;
   }
 }

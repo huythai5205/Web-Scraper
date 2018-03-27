@@ -6,4 +6,15 @@
 
 button {
   float: right;
+  margin-right: 5px;
+}
+
+.article-notes {
+  outline: black;
+  margin: 5px;
+  padding: 5px;
+}
+
+#new-article-note {
+  width: 100%;
 }

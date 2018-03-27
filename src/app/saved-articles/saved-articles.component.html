@@ -1,14 +1,40 @@
 <div class="saved-articles">
-  <div *ngIf="!articles||!articles[0]" class="no-article">
+  <div *ngIf="!articles|| !articles[0] || articles==undefined" class="no-article">
     <h4>There's no saved article</h4>
   </div>
 
   <div *ngIf="articles" class="articles">
-    <div *ngFor="let article of articles" class="card text-white bg-light mb-3">
+    <div *ngFor="let article of articles; index as i" class="card text-white bg-light mb-3">
       <div class="card-header">
         <a href="{{article.link}}" target="_blank">{{article.title}}</a>
-        <button (click)="saveNotes(article)">ARTICLE NOTES</button>
-        <button (click)="deleteArticle(article)">DELETE FROM SAVED</button>
+        <button class="btn btn-primary btn-sm" (click)="articleNotes(article) ">ARTICLE NOTES</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteArticle(i)">DELETE FROM SAVED</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="note-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <strong>Notes for Article:</strong> {{article.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="article-notes">
+        {{article.note.body}}
+        <button type="button" class="close" (click)="deleteNote(article.note._id)" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea id="new-article-note" placeholder="New Note"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="saveNote(article._id)">SAVE NOTE</button>
       </div>
     </div>
   </div>

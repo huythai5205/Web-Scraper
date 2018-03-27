@@ -24,9 +24,7 @@ module.exports = function (app) {
   });
 
   app.post('/api/article', (req, res) => {
-    console.log('Her is the article', req.body.article);
     db.Article.create(req.body.article).then(data => {
-      console.log('data in the service', data);
       res.json(data);
     }).catch(err => {
       return res.json(err);
@@ -41,7 +39,7 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/api/articles/:id", (req, res) => {
+  app.get("/api/article/:id", (req, res) => {
     db.Article.findOne({
       _id: req.params.id
     }).populate("note").then(data => {
@@ -51,7 +49,8 @@ module.exports = function (app) {
     });
   });
 
-  app.post("/api/articles/:id", (req, res) => {
+  app.post("/api/article/:id", (req, res) => {
+    console.log(req.body);
     db.Note.create(req.body).then(dbNote => {
       return db.Article.findByIdAndUpdate({
         _id: req.params.id
@@ -68,11 +67,20 @@ module.exports = function (app) {
   });
 
   app.delete('/api/article/:id', (req, res) => {
-    console.log(req.params.id);
     db.Article.remove({
       _id: req.params.id
     }).then(data => {
-      console.log(data);
+      res.json(data);
+    }).catch(err => {
+      res.json(err);
+    });
+  });
+
+  app.delete('/api/note/:id', (req, res) => {
+    db.Note.remove({
+      _id: req.params.id
+    }).then(data => {
+      res.json(data);
     }).catch(err => {
       res.json(err);
     });

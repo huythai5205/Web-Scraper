@@ -24,8 +24,8 @@ export class AppComponent implements OnInit {
   scrapeArticles() {
     this.httpClient.get('http://localhost:3000/api/scrape').subscribe(data => {
       this.dataService.setArticles(data);
-      this.articlesAdded = data.length;
-      $('.modal').modal('show');
+      // this.articlesAdded = data.length;
+      $('#articles-added-modal').modal('show');
       this.router.navigate(['display-articles']);
     },
       err => {

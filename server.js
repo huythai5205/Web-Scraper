@@ -5,6 +5,7 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/webScraper";
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use(express.static("dist"));
 
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://127.0.0.1/webScraper");
+mongoose.connect(MONGODB_URI);
 
 require('./routes/routes.js')(app.use(cors()));
 

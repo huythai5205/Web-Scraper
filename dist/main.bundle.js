@@ -118,7 +118,7 @@ var AppComponent = /** @class */ (function () {
     };
     AppComponent.prototype.scrapeArticles = function () {
         var _this = this;
-        this.httpClient.get('http://localhost:3000/api/scrape').subscribe(function (data) {
+        this.httpClient.get('./api/scrape').subscribe(function (data) {
             _this.dataService.setArticles(data);
             _this.articlesAdded = data['length'];
             $('#articles-added-modal').modal('show');
@@ -282,9 +282,7 @@ var DisplayArticlesComponent = /** @class */ (function () {
         });
     };
     DisplayArticlesComponent.prototype.saveArticle = function (article) {
-        this.httpClient.post('http://localhost:3000/api/article', { article: article }).subscribe(function (data) {
-            console.log("article added.");
-        }, function (err) {
+        this.httpClient.post('./api/article', { article: article }).subscribe(function (data) { }, function (err) {
             console.log(err);
         });
     };
@@ -324,7 +322,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/saved-articles/saved-articles.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"saved-articles\">\r\n  <div *ngIf=\"!articles|| !articles[0] || articles==undefined\" class=\"no-article\">\r\n    <h4>There's no saved article</h4>\r\n  </div>\r\n\r\n  <div *ngIf=\"articles\" class=\"articles\">\r\n    <div *ngFor=\"let article of articles; index as i\" class=\"card text-white bg-light mb-3\">\r\n      <div class=\"card-header\">\r\n        <a href=\"{{article.link}}\" target=\"_blank\">{{article.title}}</a>\r\n        <button class=\"btn btn-primary btn-sm\" (click)=\"articleNotes(article) \">ARTICLE NOTES</button>\r\n        <button class=\"btn btn-danger btn-sm\" (click)=\"deleteArticle(i)\">DELETE FROM SAVED</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"modal\" id=\"note-modal\" tabindex=\"-1\" role=\"dialog\">\r\n  <div class=\"modal-dialog\" role=\"document\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\">\r\n          <strong>Notes for Article:</strong> {{article.title}}</h5>\r\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"article-notes\">\r\n        {{article.note.body}}\r\n        <button type=\"button\" class=\"close\" (click)=\"deleteNote(article.note._id)\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n          <span aria-hidden=\"true\">&times;</span>\r\n        </button>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <textarea id=\"new-article-note\" placeholder=\"New Note\"></textarea>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"saveNote(article._id)\">SAVE NOTE</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"saved-articles\">\n  <div *ngIf=\"!articles|| !articles[0] || articles==undefined\" class=\"no-article\">\n    <h4>There's no saved article</h4>\n  </div>\n\n  <div *ngIf=\"articles\" class=\"articles\">\n    <div *ngFor=\"let article of articles; index as i\" class=\"card text-white bg-light mb-3\">\n      <div class=\"card-header\">\n        <a href=\"{{article.link}}\" target=\"_blank\">{{article.title}}</a>\n        <button class=\"btn btn-primary btn-sm\" (click)=\"articleNotes(article) \">ARTICLE NOTES</button>\n        <button class=\"btn btn-danger btn-sm\" (click)=\"deleteArticle(i)\">DELETE FROM SAVED</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<div class=\"modal\" id=\"note-modal\" tabindex=\"-1\" role=\"dialog\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">\n          <strong>Notes for Article:</strong> {{article.title}}</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"article-notes\">\n        {{article.note.body}}\n        <button type=\"button\" class=\"close\" (click)=\"deleteNote(article.note._id)\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <textarea id=\"new-article-note\" placeholder=\"New Note\"></textarea>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"saveNote(article._id)\">SAVE NOTE</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -356,20 +354,14 @@ var SavedArticlesComponent = /** @class */ (function () {
     }
     SavedArticlesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this
-            .httpClient
-            .get('http://localhost:3000/api/articles')
-            .subscribe(function (data) {
+        this.httpClient.get('./api/articles').subscribe(function (data) {
             _this.articles = data;
         }, function (err) {
             console.log(err);
         });
     };
     SavedArticlesComponent.prototype.deleteNote = function (noteId) {
-        this
-            .httpClient
-            .delete('http://localhost:3000/api/note/' + noteId)
-            .subscribe(function (data) {
+        this.httpClient.delete('./api/note/' + noteId).subscribe(function (data) {
             // this.article.note.body = "";
         }, function (err) {
             console.log(err);
@@ -377,10 +369,7 @@ var SavedArticlesComponent = /** @class */ (function () {
     };
     SavedArticlesComponent.prototype.articleNotes = function (article) {
         var _this = this;
-        this
-            .httpClient
-            .get('http://localhost:3000/api/article/' + article._id)
-            .subscribe(function (data) {
+        this.httpClient.get('./api/article/' + article._id).subscribe(function (data) {
             _this.article = data;
             $('#note-modal').modal('show');
         }, function (err) {
@@ -390,24 +379,15 @@ var SavedArticlesComponent = /** @class */ (function () {
     SavedArticlesComponent.prototype.saveNote = function (articleId) {
         var note = $('#new-article-note').val();
         if (note !== '') {
-            this
-                .httpClient
-                .post('http://localhost:3000/api/article/' + articleId, { body: note })
-                .subscribe(function (data) { }, function (err) {
+            this.httpClient.post('./api/article/' + articleId, { body: note }).subscribe(function (data) { }, function (err) {
                 console.log(err);
             });
         }
     };
     SavedArticlesComponent.prototype.deleteArticle = function (index) {
         var _this = this;
-        console.log('deleting');
-        this
-            .httpClient
-            .delete('http://localhost:3000/api/article/' + this.articles[index]._id)
-            .subscribe(function (data) {
-            _this
-                .articles
-                .splice(index, 1);
+        this.httpClient.delete('./api/article/' + this.articles[index]._id).subscribe(function (data) {
+            _this.articles.splice(index, 1);
         }, function (err) {
             console.log(err);
         });

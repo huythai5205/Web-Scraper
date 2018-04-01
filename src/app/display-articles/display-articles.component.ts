@@ -22,9 +22,7 @@ export class DisplayArticlesComponent implements OnInit {
   }
 
   saveArticle(article) {
-    this.httpClient.post('http://localhost:3000/api/article', { article }).subscribe(data => {
-      console.log("article added.");
-    },
+    this.httpClient.post('./api/article', { article }).subscribe(data => { },
       err => {
         console.log(err);
       });

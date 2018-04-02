@@ -4,7 +4,9 @@ const db = require('../models');
 
 module.exports = function (app) {
 
-
+  app.get('/', (req, res) => {
+    res.sendFile('index.html');
+  });
   app.get("/api/scrape", function (req, res) {
     let articles = [];
     axios.get("https://www.theverge.com/").then(function (response) {

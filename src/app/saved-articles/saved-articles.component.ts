@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { DataService } from '../data.service';
@@ -10,9 +10,9 @@ export class SavedArticlesComponent implements OnInit {
 
   articles;
   article = {};
-
-  constructor(private httpClient: HttpClient, private dataService: DataService) { }
-
+  constructor(private httpClient: HttpClient,
+    private dataService: DataService,
+    private renderer: Renderer2) { }
   ngOnInit() {
     this.httpClient.get('./api/articles').subscribe(data => {
       this.articles = data;
@@ -39,9 +39,12 @@ export class SavedArticlesComponent implements OnInit {
   }
 
   saveNote(articleId) {
+
     let note = $('#new-article-note').val();
     if (note !== '') {
-      this.httpClient.post('./api/article/' + articleId, { body: note }).subscribe(data => { }, err => {
+      this.httpClient.post('./api/article/' + articleId, { body: note }).subscribe(data => {
+        this.renderer.removeAttribute('textArea', 'value');
+      }, err => {
         console.log(err);
       })
     }

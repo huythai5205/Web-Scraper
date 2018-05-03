@@ -13,7 +13,7 @@ Scrapes 'The Verge' website for articles.  User can save articles they likes.  S
 * BootStrap
 
 ### Back-end:
-* NodsJs
+* NodeJs
 * ExpressJs
 * MongoDb
 * Mongoose

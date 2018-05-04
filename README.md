@@ -4,7 +4,7 @@ https://secret-bastion-38575.herokuapp.com/
 
 # Web-Scraper
 
-Scrapes 'The Verge' website for articles.  User can save articles they likes.  Saved articles are save in a mongo database.  User can then add note for the arcticle and remove from the saved list.
+Scrapes 'The Verge' website for articles. A user can save articles they like. Saved articles are saved in a Mongo database. A user can then add note for the article and remove from the saved list.
 
 ## Technologies Used:
 
